@@ -11,14 +11,8 @@
     <meta name="description" content="Sniper Elite Pro - Plataforma Profissional de Análises">
     <title>Sniper Elite Pro - Login</title>
     
-    <!-- Manifest do PWA -->
+    <!-- Manifest do PWA (o ícone do app está dentro dele) -->
     <link rel="manifest" href="manifest.json">
-    
-    <!-- Ícones do App (Alvo com Dardo) -->
-    <link rel="icon" type="image/svg+xml" href="icon.svg">
-    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     
     <style>
         * {
@@ -576,7 +570,7 @@
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             
-            console.log('Login:', { email, password });
+            console.log('Login:', { email });
             alert('Login realizado com sucesso! Redirecionando...');
         }
 
@@ -598,7 +592,7 @@
                 return;
             }
 
-            console.log('Registro:', { name, email, phone, password });
+            console.log('Registro:', { name, email, phone });
             alert('Conta criada com sucesso! Faça login para continuar.');
             showLogin();
         }
