@@ -1,24 +1,11 @@
-const CACHE_NAME = 'sniper-elite-v3';
-const urlsToCache = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon.svg',
-  './icon-192.png',
-  './icon-512.png',
-  './icon-maskable-192.png',
-  './icon-maskable-512.png',
-  './apple-touch-icon.png'
-];
+const CACHE_NAME = 'sniper-elite-v4';
+const urlsToCache = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', event => {
   self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
-  );
+  event.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(urlsToCache)));
 });
 
-// Remove caches antigos (v1) para o novo manifest/ícones valerem
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
@@ -29,7 +16,5 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
-  event.respondWith(
-    caches.match(event.request).then(response => response || fetch(event.request))
-  );
+  event.respondWith(caches.match(event.request).then(r => r || fetch(event.request)));
 });
