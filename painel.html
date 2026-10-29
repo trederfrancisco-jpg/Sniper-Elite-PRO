@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Zona Inteligente PRO</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#00ff73">
+
+  <!-- Fontes Modernas -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary-green: #00dc82;
+      --primary-red: #ff4757;
+      --accent-gold: #ffd700;
+      --bg-dark: #0a0a0f;
+      --bg-card: #12121a;
+      --bg-card-hover: #1a1a25;
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0b0;
+      --border-color: #2a2a3a;
+      --whatsapp-green: #25D366;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1a2e 100%);
+      color: var(--text-primary);
+      height: 100vh;
+      overflow: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    aside {
+      width: 100%;
+      background: linear-gradient(145deg, var(--bg-card) 0%, #1a1a2e 100%);
+      padding: 16px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 100px;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      padding: 20px 16px;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, rgba(0, 220, 130, 0.1) 0%, rgba(0, 220, 130, 0.05) 100%);
+      border-radius: 16px;
+      border: 1px solid rgba(0, 220, 130, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(0, 220, 130, 0.1) 0%, transparent 70%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+    header h1 {
+      color: var(--primary-green);
+      font-size: 1.5em;
+      margin-bottom: 6px;
+      text-shadow: 0 0 20px rgba(0, 220, 130, 0.5);
+      position: relative;
+      z-index: 1;
+    }
+    header .subtitle {
+      color: var(--text-secondary);
+      font-size: 0.85em;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* BARRA DO USUÁRIO */
+    .user-bar {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 0.85em;
+      color: var(--text-secondary);
+    }
+    .user-bar span { font-weight: 600; }
+    .btn-logout {
+      width: auto;
+      margin: 0;
+      padding: 6px 14px;
+      font-size: 0.9em;
+      background: rgba(255, 71, 87, 0.15);
+      color: var(--primary-red);
+      border: 1px solid rgba(255, 71, 87, 0.4);
+      box-shadow: none;
+    }
+
+    /* CARDS */
+    .card {
+      background: linear-gradient(145deg, var(--bg-card) 0%, var(--bg-card-hover) 100%);
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+      border-color: rgba(0, 220, 130, 0.3);
+    }
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.15em;
+      margin-bottom: 16px;
+      color: var(--accent-gold);
+      font-weight: 700;
+      border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+      padding-bottom: 12px;
+    }
+    .card-title i { font-size: 1.2em; }
+
+    /* INPUTS */
+    .input-group { margin-bottom: 14px; }
+    .input-group label {
+      display: block;
+      font-size: 0.9em;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    input, select {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(30, 30, 45, 0.8);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-size: 1em;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary-green);
+      box-shadow: 0 0 15px rgba(0, 220, 130, 0.3);
+      background: rgba(30, 30, 45, 1);
+    }
+    input::placeholder { color: #555; }
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2300dc82' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 20px;
+      padding-right: 45px;
+    }
+
+    /* TOGGLE SWITCH */
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: rgba(30, 30, 45, 0.6);
+      border-radius: 12px;
+      margin-bottom: 14px;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .toggle-container:hover {
+      background: rgba(30, 30, 45, 0.8);
+      border-color: rgba(0, 220, 130, 0.3);
+    }
+    .toggle-label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .toggle-label span:first-child {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.95em;
+    }
+    .toggle-label span:last-child {
+      font-size: 0.8em;
+      color: var(--text-secondary);
+    }
+    .toggle-switch {
+      position: relative;
+      width: 56px;
+      height: 28px;
+      background: var(--border-color);
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    .toggle-switch.active {
+      background: var(--primary-green);
+    }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 22px;
+      height: 22px;
+      background: #fff;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .toggle-switch.active::after {
+      left: 31px;
+    }
+
+    /* BUTTONS */
+    button {
+      width: 100%;
+      padding: 16px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.05em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); }
+    button:active { transform: translateY(0); }
+    .btn-buy {
+      background: linear-gradient(135deg, var(--primary-green) 0%, #00b870 100%);
+      color: #000;
+      border: 2px solid var(--primary-green);
+    }
+    .btn-buy:hover { background: linear-gradient(135deg, #00f090 0%, #00dc82 100%); }
+    .btn-sell {
+      background: linear-gradient(135deg, var(--primary-red) 0%, #ff6b7a 100%);
+      color: #fff;
+      border: 2px solid var(--primary-red);
+    }
+    .btn-sell:hover { background: linear-gradient(135deg, #ff5c6b 0%, #ff4757 100%); }
+
+    .separator {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+      margin: 16px 0;
+    }
+
+    /* HISTÓRICO */
+    #zonesHistory { max-height: 65vh; overflow-y: auto; }
+    .zone-item {
+      background: rgba(30, 30, 50, 0.6);
+      padding: 16px;
+      border-radius: 14px;
+      margin-bottom: 14px;
+      border-left: 5px solid var(--border-color);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .zone-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .zone-item:hover::before { opacity: 1; }
+    .zone-item:hover {
+      background: rgba(40, 40, 65, 0.8);
+      transform: translateX(4px);
+    }
+    .zone-item.buy { border-left-color: var(--primary-green); }
+    .zone-item.sell { border-left-color: var(--primary-red); }
+    .zone-item .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .zone-item .pair {
+      font-weight: 700;
+      color: var(--accent-gold);
+      font-size: 1.1em;
+    }
+    .zone-item .direction {
+      font-size: 0.8em;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .zone-item.buy .direction {
+      background: rgba(0, 220, 130, 0.2);
+      color: var(--primary-green);
+    }
+    .zone-item.sell .direction {
+      background: rgba(255, 71, 87, 0.2);
+      color: var(--primary-red);
+    }
+    .zone-item .levels {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .zone-item .level {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      font-size: 1em;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .zone-item .level.fifty {
+      background: rgba(255, 215, 0, 0.15);
+      color: var(--accent-gold);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+    .zone-item .level.twenty {
+      background: rgba(0, 220, 130, 0.1);
+      color: var(--primary-green);
+      border: 1px solid rgba(0, 220, 130, 0.3);
+    }
+    .zone-item.sell .level.twenty {
+      background: rgba(255, 71, 87, 0.1);
+      color: var(--primary-red);
+      border: 1px solid rgba(255, 71, 87, 0.3);
+    }
+    .zone-item .time {
+      color: var(--text-secondary);
+      font-size: 0.8em;
+      text-align: right;
+      font-style: italic;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* BOTÃO WHATSAPP */
+    .btn-share {
+      background: var(--whatsapp-green);
+      border: none;
+      color: #fff;
+      font-size: 0.85em;
+      cursor: pointer;
+      margin-left: 8px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+    .btn-share:hover {
+      background: #1ebe57;
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    }
+
+    /* FLOATING WHATSAPP */
+    .floating-whatsapp {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 65px;
+      height: 65px;
+      background: linear-gradient(135deg, var(--whatsapp-green) 0%, #1ebe57 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5);
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      border: 3px solid #fff;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .floating-whatsapp:hover {
+      transform: scale(1.15) rotate(15deg);
+      box-shadow: 0 12px 40px rgba(37, 211, 102, 0.7);
+    }
+    .floating-whatsapp i { font-size: 32px; color: #fff; }
+    .floating-whatsapp .badge {
+      position: absolute;
+      top: -5px; right: -5px;
+      background: var(--primary-red);
+      color: #fff;
+      font-size: 0.75em;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 20px;
+      border: 2px solid #fff;
+      min-width: 24px;
+      text-align: center;
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: var(--primary-green); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00f090; }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .card { padding: 18px; }
+      .card-title { font-size: 1.1em; }
+      input, select { padding: 13px 14px; font-size: 0.95em; }
+      button { padding: 15px; font-size: 1em; }
+      .floating-whatsapp { width: 60px; height: 60px; bottom: 20px; right: 20px; }
+      .floating-whatsapp i { font-size: 28px; }
+    }
+
+    /* ANIMAÇÕES */
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .card, .zone-item { animation: slideIn 0.4s ease forwards; }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: linear-gradient(135deg, var(--primary-green) 0%, #00b870 100%);
+      color: #000;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      z-index: 2000;
+      transition: transform 0.4s ease;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.error {
+      background: linear-gradient(135deg, var(--primary-red) 0%, #ff6b7a 100%);
+      color: #fff;
+    }
+  
+
+    /* ===== NOVO ===== */
+    .hidden { display: none !important; }
+    .btn-share { width: auto; margin-top: 0; }
+    .actions { display: flex; gap: 6px; align-items: center; }
+    .btn-del {
+      width: auto; margin: 0; padding: 8px 12px; font-size: 0.85em;
+      background: rgba(255, 71, 87, 0.15); color: var(--primary-red);
+      border: 1px solid rgba(255, 71, 87, 0.4); box-shadow: none;
+    }
+    .tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+    .tab {
+      margin: 0; padding: 10px; font-size: 0.9em;
+      background: rgba(30, 30, 45, 0.8); color: var(--text-secondary);
+      border: 1px solid var(--border-color); box-shadow: none;
+    }
+    .tab.active {
+      background: rgba(0, 220, 130, 0.15); color: var(--primary-green);
+      border-color: rgba(0, 220, 130, 0.5);
+    }
+    .day-title {
+      color: var(--text-secondary); font-size: 0.85em; font-weight: 700;
+      margin: 8px 0 10px; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .admin-tag {
+      display: inline-block; background: rgba(255, 215, 0, 0.15); color: var(--accent-gold);
+      border: 1px solid rgba(255, 215, 0, 0.4); border-radius: 20px;
+      padding: 2px 10px; font-size: 0.65em; font-weight: 700; margin-left: 6px;
+    }
+    .client-item {
+      background: rgba(30, 30, 50, 0.6); padding: 14px; border-radius: 14px;
+      margin-bottom: 10px; border-left: 4px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    }
+    .client-item.on { border-left-color: var(--primary-green); }
+    .client-item.off { border-left-color: var(--accent-gold); }
+    .client-info {
+      display: flex; flex-direction: column; gap: 3px; min-width: 0;
+      font-size: 0.85em; color: var(--text-secondary); word-break: break-all;
+    }
+    .client-info b { color: var(--text-primary); font-size: 1.05em; }
+    .client-info a { color: var(--whatsapp-green); text-decoration: none; }
+    .btn-toggle-client {
+      width: auto; margin: 0; padding: 8px 14px; font-size: 0.85em;
+      flex-shrink: 0; box-shadow: none;
+    }
+    .btn-toggle-client.liberar { background: var(--primary-green); color: #000; }
+    .btn-toggle-client.bloquear {
+      background: rgba(255, 71, 87, 0.15); color: var(--primary-red);
+      border: 1px solid rgba(255, 71, 87, 0.4);
+    }
+    .pending-box { text-align: center; padding: 10px; }
+    .pending-box .big { font-size: 3em; color: var(--accent-gold); margin-bottom: 14px; }
+    .pending-box h2 { margin-bottom: 10px; }
+    .pending-box p { color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px; }
+    .btn-wa-link {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--whatsapp-green); color: #fff; text-decoration: none;
+      padding: 15px; border-radius: 12px; font-weight: 700; margin-top: 14px;
+    }
+    .disclaimer {
+      color: #6b6b7b; font-size: 0.75em; text-align: center;
+      line-height: 1.5; padding: 6px 10px 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <aside>
+      <!-- HEADER -->
+      <header>
+        <div class="user-bar">
+          <span><i class="fas fa-user-circle"></i> <b id="userName"></b></span>
+          <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
+        </div>
+        <h1><i class="fas fa-chart-line"></i> Zona Inteligente PRO</h1>
+        <div class="subtitle">Painel de Análises</div>
+      </header>
+
+      <!-- ACESSO PENDENTE (cliente ainda não liberado) -->
+      <div id="pendingView" class="card hidden">
+        <div class="pending-box">
+          <div class="big"><i class="fas fa-hourglass-half"></i></div>
+          <h2>Acesso em análise</h2>
+          <p>Seu cadastro foi recebido.</p>
+          <p>O acesso às análises é liberado após a confirmação do pagamento.</p>
+          <a id="pendingWa" class="btn-wa-link" href="#" target="_blank" rel="noopener">
+            <i class="fab fa-whatsapp"></i> Falar no WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div id="mainView" class="hidden">
+
+        <!-- NOVA ANÁLISE (SÓ ADMIN) -->
+        <div id="adminTools" class="card hidden">
+          <div class="card-title">
+            <i class="fas fa-calculator"></i>
+            <span>NOVA ANÁLISE <span class="admin-tag">só você</span></span>
+          </div>
+
+          <div class="input-group">
+            <label for="pairSelect"><i class="fas fa-exchange-alt"></i> Par / Ativo:</label>
+            <select id="pairSelect">
+              <option value="">Selecione o par...</option>
+            </select>
+          </div>
+
+          <div class="toggle-container" onclick="toggleVisibility()">
+            <div class="toggle-label">
+              <span><i class="fas fa-eye-slash" id="toggleIcon"></i> Mostrar "50%" e "20%" nos rótulos</span>
+              <span>Vale para as próximas análises publicadas e compartilhadas</span>
+            </div>
+            <div class="toggle-switch" id="visibilityToggle"></div>
+          </div>
+
+          <div class="input-group">
+            <label for="c_fechamento"><i class="fas fa-arrow-up" style="color:var(--primary-green)"></i> Compra (Pavio Inferior)</label>
+            <input id="c_fechamento" type="number" step="0.00001" placeholder="Fechamento da vela">
+            <input id="c_minima" type="number" step="0.00001" placeholder="Mínima da vela">
+            <button class="btn-buy" onclick="calcCompra()">
+              <i class="fas fa-check-circle"></i> Publicar Zona de Compra
+            </button>
+          </div>
+
+          <div class="separator"></div>
+
+          <div class="input-group">
+            <label for="v_fechamento"><i class="fas fa-arrow-down" style="color:var(--primary-red)"></i> Venda (Pavio Superior)</label>
+            <input id="v_fechamento" type="number" step="0.00001" placeholder="Fechamento da vela">
+            <input id="v_maxima" type="number" step="0.00001" placeholder="Máxima da vela">
+            <button class="btn-sell" onclick="calcVenda()">
+              <i class="fas fa-check-circle"></i> Publicar Zona de Venda
+            </button>
+          </div>
+        </div>
+
+        <!-- HISTÓRICO / ANÁLISES DO DIA -->
+        <div class="card">
+          <div class="card-title">
+            <i class="fas fa-clipboard-list"></i>
+            <span>ANÁLISES</span>
+          </div>
+          <div class="tabs">
+            <button class="tab active" id="tabHoje" onclick="setTab('hoje')">Hoje</button>
+            <button class="tab" id="tabAnteriores" onclick="setTab('anteriores')">Anteriores</button>
+          </div>
+          <div id="zonesHistory"></div>
+        </div>
+
+        <!-- CLIENTES (SÓ ADMIN) -->
+        <div id="adminClients" class="card hidden">
+          <div class="card-title">
+            <i class="fas fa-users"></i>
+            <span>CLIENTES <span class="admin-tag" id="clientsCount">0</span></span>
+          </div>
+          <div id="clientsList"></div>
+        </div>
+      </div>
+
+      <div class="disclaimer">
+        As zonas são uma ferramenta de apoio e não garantem resultado.
+        Operar no mercado financeiro envolve risco de perda do capital investido.
+      </div>
+    </aside>
+  </div>
+
+  <!-- BOTÃO FLUTUANTE WHATSAPP (SÓ ADMIN) -->
+  <div class="floating-whatsapp hidden" id="floatingWa" onclick="shareAllToWhatsApp()" title="Compartilhar análises de hoje">
+    <i class="fab fa-whatsapp"></i>
+    <span class="badge" id="whatsappBadge">0</span>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Operação realizada!</span>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc, collection, query, orderBy, limit, onSnapshot, addDoc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { firebaseConfig, ADMIN_EMAIL, WHATSAPP_SUPORTE } from "./firebase-config.js";
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let currentUser = null;
+    let isAdmin = false;
+    let zones = [];
+    let clients = [];
+    let activeTab = 'hoje';
+    let showLabels = false;
+    let userUnsub = null, zonesUnsub = null, clientsUnsub = null;
+
+    const $ = id => document.getElementById(id);
+
+    // ===== Pares / ativos =====
+    const PARES = [["🌙 FOREX OTC (Todos os Dias)", ["EUR/USD OTC", "GBP/USD OTC", "USD/JPY OTC", "AUD/USD OTC", "USD/CHF OTC", "NZD/USD OTC", "USD/CAD OTC", "EUR/GBP OTC", "EUR/JPY OTC", "GBP/JPY OTC", "AUD/JPY OTC", "CHF/JPY OTC", "CAD/JPY OTC", "EUR/AUD OTC", "EUR/CAD OTC", "GBP/AUD OTC", "GBP/CAD OTC", "USD/ARS OTC|USD/ARS OTC (Dólar/Peso Argentino)", "USD/BRL OTC|USD/BRL OTC (Dólar/Real Brasileiro)", "USD/BDT OTC|USD/BDT OTC (Dólar/Taka Bangladesh)", "USD/COP OTC|USD/COP OTC (Dólar/Peso Colombiano)", "USD/EGP OTC|USD/EGP OTC (Dólar/Libra Egípcia)", "USD/IDR OTC|USD/IDR OTC (Dólar/Rupia Indonésia)", "USD/PHP OTC|USD/PHP OTC (Dólar/Peso Filipino)"]], ["📊 FOREX - Mercado Aberto", ["EUR/USD", "GBP/USD", "USD/JPY", "AUD/USD", "USD/CHF", "NZD/USD", "USD/CAD", "EUR/GBP", "EUR/JPY", "GBP/JPY", "AUD/JPY", "CHF/JPY", "CAD/JPY", "EUR/AUD", "EUR/CAD", "GBP/AUD", "GBP/CAD", "AUD/CAD", "AUD/CHF", "AUD/NZD", "CAD/CHF", "EUR/NZD", "GBP/CHF", "GBP/NZD", "NZD/JPY", "USD/MXN", "USD/ZAR", "USD/TRY", "USD/SGD", "USD/ARS|USD/ARS (Dólar/Peso Argentino)", "USD/BRL|USD/BRL (Dólar/Real Brasileiro)", "USD/BDT|USD/BDT (Dólar/Taka Bangladesh)", "USD/COP|USD/COP (Dólar/Peso Colombiano)", "USD/EGP|USD/EGP (Dólar/Libra Egípcia)", "USD/IDR|USD/IDR (Dólar/Rupia Indonésia)", "USD/PHP|USD/PHP (Dólar/Peso Filipino)"]], ["₿ CRIPTOMOEDAS - Quotex/Pocket", ["BTC/USD|Bitcoin (BTC/USD)", "ETH/USD|Ethereum (ETH/USD)", "XRP/USD|Ripple (XRP/USD)", "LTC/USD|Litecoin (LTC/USD)", "BCH/USD|Bitcoin Cash (BCH/USD)", "ADA/USD|Cardano (ADA/USD)", "XLM/USD|Stellar (XLM/USD)", "TRX/USD|TRON (TRX/USD)", "DASH/USD|Dash (DASH/USD)", "NEO/USD|NEO (NEO/USD)", "ETC/USD|Ethereum Classic (ETC/USD)", "ZEC/USD|Zcash (ZEC/USD)", "XMR/USD|Monero (XMR/USD)", "BNB/USD|Binance Coin (BNB/USD)", "DOGE/USD|Dogecoin (DOGE/USD)", "LINK/USD|Chainlink (LINK/USD)", "UNI/USD|Uniswap (UNI/USD)", "SOL/USD|Solana (SOL/USD)", "MATIC/USD|Polygon (MATIC/USD)", "AVAX/USD|Avalanche (AVAX/USD)", "DOT/USD|Polkadot (DOT/USD)", "ATOM/USD|Cosmos (ATOM/USD)", "VET/USD|VeChain (VET/USD)", "THETA/USD|Theta (THETA/USD)", "FIL/USD|Filecoin (FIL/USD)"]], [" ÍNDICES - Quotex/Pocket", ["US500|S&P 500 (US500)", "US Tech 100|NASDAQ (US Tech 100)", "Dow Jones", "FTSE|FTSE 100", "Nikkei|Nikkei 225", "DAX|DAX Germany", "CAC|CAC 40", "Euro Stoxx 50", "Hang Seng", "ASX 200", "Russell 2000"]], ["💰 COMMODITIES - Quotex/Pocket", ["Gold|Ouro (Gold)", "Silver|Prata (Silver)", "Oil|Petróleo (Oil)", "Natural Gas|Gás Natural", "Copper|Cobre", "Platinum|Platina", "Palladium|Paládio", "Brent Oil|Petróleo Brent"]], ["🏢 AÇÕES - Quotex/Pocket", ["Apple|Apple (AAPL)", "Tesla|Tesla (TSLA)", "Amazon|Amazon (AMZN)", "Google|Google (GOOGL)", "Meta|Meta (META)", "Microsoft|Microsoft (MSFT)", "Netflix|Netflix (NFLX)", "NVIDIA|NVIDIA (NVDA)", "AMD", "PayPal|PayPal (PYPL)", "Visa|Visa (V)", "JP Morgan|JP Morgan (JPM)", "Walmart|Walmart (WMT)", "Coca-Cola|Coca-Cola (KO)", "Boeing|Boeing (BA)", "Disney|Disney (DIS)", "Intel|Intel (INTC)", "IBM", "Pfizer|Pfizer (PFE)", "Exxon|Exxon (XOM)", "Chevron|Chevron (CVX)", "AT&T|AT&T (T)", "Verizon|Verizon (VZ)", "Procter & Gamble|Procter & Gamble (PG)", "Johnson & Johnson|Johnson & Johnson (JNJ)"]]];
+    PARES.forEach(([grupo, itens]) => {
+      const og = document.createElement('optgroup');
+      og.label = grupo;
+      itens.forEach(it => {
+        const [v, l] = it.split('|');
+        const o = document.createElement('option');
+        o.value = v;
+        o.textContent = l || v;
+        og.appendChild(o);
+      });
+      $('pairSelect').appendChild(og);
+    });
+
+    // ===== Utilidades =====
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function fix(n) { return parseFloat(n.toFixed(6)); }
+    function formatTime() { return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); }
+    function todayStr() {
+      const d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+    function fmtDay(d) { const p = d.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; }
+    function waLink(phone) {
+      let n = String(phone || '').replace(/\D/g, '');
+      if (!n) return '';
+      if (n.length <= 11) n = '55' + n;
+      return 'https://wa.me/' + n;
+    }
+
+    function showToast(message, isError = false) {
+      $('toastMessage').textContent = message;
+      $('toast').classList.remove('error');
+      if (isError) $('toast').classList.add('error');
+      $('toast').classList.add('show');
+      setTimeout(() => $('toast').classList.remove('show'), 3000);
+    }
+
+    // ===== Login / telas =====
+    onAuthStateChanged(auth, user => {
+      if (!user) { location.replace('index.html'); return; }
+      currentUser = user;
+      isAdmin = (user.email || '').toLowerCase() === String(ADMIN_EMAIL).toLowerCase();
+      $('userName').textContent = (user.displayName || user.email || '').split(' ')[0];
+
+      if (isAdmin) { showMain(); return; }
+
+      if (userUnsub) userUnsub();
+      userUnsub = onSnapshot(doc(db, 'users', user.uid), snap => {
+        if (!snap.exists()) {
+          // cadastro incompleto: cria o registro do cliente como pendente
+          setDoc(doc(db, 'users', user.uid), {
+            name: user.displayName || '', email: user.email || '', phone: '', ativo: false, createdAt: Date.now()
+          }).catch(() => {});
+          showPending();
+          return;
+        }
+        if (snap.data().ativo === true) showMain(); else showPending();
+      }, () => showPending());
+    });
+
+    function stopListeners() {
+      if (zonesUnsub) { zonesUnsub(); zonesUnsub = null; }
+      if (clientsUnsub) { clientsUnsub(); clientsUnsub = null; }
+    }
+
+    function showPending() {
+      stopListeners();
+      $('mainView').classList.add('hidden');
+      $('floatingWa').classList.add('hidden');
+      $('pendingView').classList.remove('hidden');
+      const msg = 'Olá! Fiz meu cadastro com o e-mail ' + (currentUser ? currentUser.email : '') + ' e quero liberar meu acesso.';
+      $('pendingWa').href = 'https://wa.me/' + WHATSAPP_SUPORTE + '?text=' + encodeURIComponent(msg);
+    }
+
+    function showMain() {
+      $('pendingView').classList.add('hidden');
+      $('mainView').classList.remove('hidden');
+      $('adminTools').classList.toggle('hidden', !isAdmin);
+      $('adminClients').classList.toggle('hidden', !isAdmin);
+      $('floatingWa').classList.toggle('hidden', !isAdmin);
+      startZones();
+      if (isAdmin) startClients();
+    }
+
+    // ===== Análises (todos leem, só o admin publica) =====
+    function startZones() {
+      if (zonesUnsub) return;
+      const q = query(collection(db, 'zonas'), orderBy('ts', 'desc'), limit(300));
+      zonesUnsub = onSnapshot(q, snap => {
+        zones = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderZones();
+        updateBadge();
+      }, err => {
+        console.error(err);
+        showToast('Sem permissão para ver as análises', true);
+      });
+    }
+
+    function updateBadge() {
+      const n = zones.filter(z => z.dia === todayStr()).length;
+      $('whatsappBadge').textContent = n;
+      $('whatsappBadge').style.display = n > 0 ? 'block' : 'none';
+    }
+
+    function zoneHTML(z) {
+      const isBuy = z.direction === 'buy';
+      const dir = isBuy ? '<i class="fas fa-arrow-up"></i> COMPRA' : '<i class="fas fa-arrow-down"></i> VENDA';
+      const lab = !!z.labels;
+      const actions = isAdmin ? `<div class="actions">
+          <button class="btn-share" onclick="shareToWhatsApp('${z.id}')"><i class="fab fa-whatsapp"></i> Compartilhar</button>
+          <button class="btn-del" onclick="deleteZone('${z.id}')"><i class="fas fa-trash"></i></button>
+        </div>` : '';
+      return `<div class="zone-item ${isBuy ? 'buy' : 'sell'}">
+        <div class="header">
+          <div class="pair">${esc(z.pair)}</div>
+          <div class="direction">${dir}</div>
+        </div>
+        <div class="levels">
+          <div class="level fifty">🟠 ${lab ? '50%: ' : ''}${esc(z.z50)}</div>
+          <div class="level twenty">${isBuy ? '🟢' : '🔴'} ${lab ? '20%: ' : ''}${esc(z.z20)}</div>
+        </div>
+        <div class="time">
+          <span><i class="fas fa-clock"></i> ${esc(z.time)}</span>
+          ${actions}
+        </div>
+      </div>`;
+    }
+
+    function renderZones() {
+      const today = todayStr();
+      const hoje = zones.filter(z => z.dia === today);
+      const antes = zones.filter(z => z.dia !== today);
+      $('tabHoje').textContent = 'Hoje (' + hoje.length + ')';
+      $('tabHoje').classList.toggle('active', activeTab === 'hoje');
+      $('tabAnteriores').classList.toggle('active', activeTab === 'anteriores');
+
+      const list = activeTab === 'hoje' ? hoje : antes;
+      if (!list.length) {
+        $('zonesHistory').innerHTML = `<div style="color:var(--text-secondary);text-align:center;padding:30px;">
+          <i class="fas fa-lightbulb" style="font-size:2em;margin-bottom:10px;opacity:0.5;"></i>
+          <p>${activeTab === 'hoje' ? 'Nenhuma análise publicada hoje ainda' : 'Sem análises anteriores'}</p>
+        </div>`;
+        return;
+      }
+      let html = '', lastDay = '';
+      list.forEach(z => {
+        if (activeTab === 'anteriores' && z.dia !== lastDay) {
+          lastDay = z.dia;
+          html += `<div class="day-title">${fmtDay(z.dia || '0000-00-00')}</div>`;
+        }
+        html += zoneHTML(z);
+      });
+      $('zonesHistory').innerHTML = html;
+    }
+
+    window.setTab = tab => { activeTab = tab; renderZones(); };
+
+    // ===== Publicar (só admin) =====
+    window.toggleVisibility = () => {
+      showLabels = !showLabels;
+      $('visibilityToggle').classList.toggle('active', showLabels);
+      $('toggleIcon').className = showLabels ? 'fas fa-eye' : 'fas fa-eye-slash';
+      showToast(showLabels ? '👁️ Rótulos VISÍVEIS (50% e 20%)' : '🙈 Rótulos OCULTOS (só valores)');
+    };
+
+    async function publish(zone) {
+      try {
+        await addDoc(collection(db, 'zonas'), { ...zone, ts: Date.now(), dia: todayStr(), by: currentUser.email });
+        return true;
+      } catch (e) {
+        console.error(e);
+        showToast('Erro ao publicar: ' + (e.code || e.message), true);
+        return false;
+      }
+    }
+
+    window.calcCompra = async () => {
+      if (!isAdmin) return;
+      const pair = $('pairSelect').value.trim();
+      const fechamento = parseFloat($('c_fechamento').value);
+      const minima = parseFloat($('c_minima').value);
+
+      if (!pair) { showToast('⚠️ Selecione o PAR/ATIVO primeiro', true); return; }
+      if (isNaN(fechamento) || isNaN(minima)) { showToast('⚠️ Preencha todos os campos', true); return; }
+      if (fechamento <= minima) { showToast('⚠️ Fechamento deve ser > mínima', true); return; }
+
+      const pavio = fechamento - minima;
+      const z50 = fix(minima + (pavio * 0.5));
+      const z20 = fix(minima + (pavio * 0.2));
+
+      if (await publish({ pair, z50, z20, direction: 'buy', time: formatTime(), labels: showLabels })) {
+        $('c_fechamento').value = '';
+        $('c_minima').value = '';
+        showToast(`✅ COMPRA publicada: 50%=${z50} | 20%=${z20}`);
+      }
+    };
+
+    window.calcVenda = async () => {
+      if (!isAdmin) return;
+      const pair = $('pairSelect').value.trim();
+      const fechamento = parseFloat($('v_fechamento').value);
+      const maxima = parseFloat($('v_maxima').value);
+
+      if (!pair) { showToast('⚠️ Selecione o PAR/ATIVO primeiro', true); return; }
+      if (isNaN(fechamento) || isNaN(maxima)) { showToast('⚠️ Preencha todos os campos', true); return; }
+      if (fechamento >= maxima) { showToast('⚠️ Fechamento deve ser < máxima', true); return; }
+
+      const pavio = maxima - fechamento;
+      const z50 = fix(maxima - (pavio * 0.5));
+      const z20 = fix(maxima - (pavio * 0.2));
+
+      if (await publish({ pair, z50, z20, direction: 'sell', time: formatTime(), labels: showLabels })) {
+        $('v_fechamento').value = '';
+        $('v_maxima').value = '';
+        showToast(`✅ VENDA publicada: 50%=${z50} | 20%=${z20}`);
+      }
+    };
+
+    window.deleteZone = async id => {
+      if (!isAdmin) return;
+      if (!confirm('Apagar esta análise para todos os clientes?')) return;
+      try { await deleteDoc(doc(db, 'zonas', id)); showToast('🗑️ Análise apagada'); }
+      catch (e) { showToast('Erro ao apagar: ' + (e.code || e.message), true); }
+    };
+
+    // ===== Compartilhar no WhatsApp (só admin) =====
+    function levels(z) {
+      const lab = !!z.labels;
+      const dot = z.direction === 'buy' ? '🟢' : '🔴';
+      return `🟠 ${lab ? '50%: ' : ''}${z.z50}\n${dot} ${lab ? '20%: ' : ''}${z.z20}`;
+    }
+
+    window.shareToWhatsApp = id => {
+      const z = zones.find(x => x.id === id);
+      if (!z) return;
+      const dirLabel = z.direction === 'buy' ? 'COMPRA' : 'VENDA';
+      const message = `🔥 *ZONA INTELIGENTE PRO*\n\n📍 *${z.pair}*\n\n${levels(z)}\n\n📊 Direção: *${dirLabel}*\n⏱️ 5 MIN\n\n📈 Boa sorte!`;
+      window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(message), '_blank');
+    };
+
+    window.shareAllToWhatsApp = () => {
+      const hoje = zones.filter(z => z.dia === todayStr());
+      if (!hoje.length) { showToast('⚠️ Nenhuma análise de hoje para compartilhar', true); return; }
+      const recent = hoje.slice(0, 5).reverse();
+      let message = `🔥 *ZONA INTELIGENTE PRO*\n *Análises de Hoje*\n\n`;
+      recent.forEach((z, i) => {
+        const dirLabel = z.direction === 'buy' ? '🟢 COMPRA' : '🔴 VENDA';
+        message += `━━━━━━━━━━━━━━━━━━\n${i + 1}. *${z.pair}*\n${dirLabel}\n${levels(z)}\n⏱️ ${z.time}\n\n`;
+      });
+      message += `━━━━━━━━━━━━━━━━━━\n *Boa sorte nas operações!*`;
+      window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(message), '_blank');
+    };
+
+    // ===== Clientes (só admin) =====
+    function startClients() {
+      if (clientsUnsub) return;
+      clientsUnsub = onSnapshot(collection(db, 'users'), snap => {
+        clients = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderClients();
+      }, err => console.error(err));
+    }
+
+    function renderClients() {
+      const list = clients
+        .filter(c => c.id !== currentUser.uid)
+        .sort((a, b) => (a.ativo === b.ativo ? 0 : (a.ativo ? 1 : -1)) || (b.createdAt || 0) - (a.createdAt || 0));
+      const pend = list.filter(c => !c.ativo).length;
+      $('clientsCount').textContent = list.length + ' no total • ' + pend + ' pendentes';
+
+      if (!list.length) {
+        $('clientsList').innerHTML = '<p style="color:var(--text-secondary);text-align:center;padding:20px;">Nenhum cliente cadastrado ainda</p>';
+        return;
+      }
+      $('clientsList').innerHTML = list.map(c => {
+        const on = c.ativo === true;
+        const link = waLink(c.phone);
+        const phone = c.phone ? (link ? `<a href="${link}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> ${esc(c.phone)}</a>` : esc(c.phone)) : '';
+        return `<div class="client-item ${on ? 'on' : 'off'}">
+          <div class="client-info">
+            <b>${esc(c.name || 'Sem nome')}</b>
+            <span>${esc(c.email)}</span>
+            ${phone ? '<span>' + phone + '</span>' : ''}
+            <span>${on ? '✅ Ativo' : '⏳ Pendente'}</span>
+          </div>
+          <button class="btn-toggle-client ${on ? 'bloquear' : 'liberar'}" onclick="toggleClient('${c.id}', ${on})">
+            ${on ? 'Bloquear' : 'Liberar'}
+          </button>
+        </div>`;
+      }).join('');
+    }
+
+    window.toggleClient = async (uid, ativoAtual) => {
+      if (!isAdmin) return;
+      try {
+        await updateDoc(doc(db, 'users', uid), { ativo: !ativoAtual });
+        showToast(ativoAtual ? '🔒 Acesso bloqueado' : '✅ Acesso liberado');
+      } catch (e) {
+        showToast('Erro: ' + (e.code || e.message), true);
+      }
+    };
+
+    // ===== Sair =====
+    window.logout = async () => {
+      stopListeners();
+      if (userUnsub) userUnsub();
+      try { await signOut(auth); } catch (e) {}
+      location.replace('index.html');
+    };
+  </script>
+</body>
+</html>
