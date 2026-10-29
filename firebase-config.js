@@ -1,15 +1,14 @@
-// Preencha com os dados do seu projeto Firebase (passo a passo no chat)
 export const firebaseConfig = {
-  apiKey: "COLE_AQUI",
-  authDomain: "COLE_AQUI",
-  projectId: "COLE_AQUI",
-  storageBucket: "COLE_AQUI",
-  messagingSenderId: "COLE_AQUI",
-  appId: "COLE_AQUI"
+  apiKey: "AIzaSy...", // COLE O VALOR REAL AQUI
+  authDomain: "seu-projeto.firebaseapp.com",
+  projectId: "seu-projeto",
+  storageBucket: "seu-projeto.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abc123"
 };
 
-// E-mail do ADMIN (o seu), em letras minúsculas
-export const ADMIN_EMAIL = "seu-email@gmail.com";
+// SEU E-MAIL (será o ADMIN)
+export const ADMIN_EMAIL = "seu-email-real@gmail.com";
 
-// WhatsApp de suporte que aparece para o cliente pendente (com 55 + DDD, só números)
-export const WHATSAPP_SUPORTE = "5511999999999";
+// SEU WHATSAPP (com 55 + DDD)
+export const WHATSAPP_SUPORTE = "5511987654321";
